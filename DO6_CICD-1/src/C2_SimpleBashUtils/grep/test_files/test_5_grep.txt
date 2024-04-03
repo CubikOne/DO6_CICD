@@ -1,0 +1,10 @@
+This is a sample text file. It contains
+functionality. You can always use grep with any
+kind of data but it works best with text data.
+It supports numbers like 1, 2, 3 etc. as well as
+alphabets and special characters like - + * # etc.
+This is a sample text file. It's repeated two times.
+$ grep "\.$" text_file.txt
+kind of data but it works best with text data.
+alphabets and special characters like - + * # etc.
+This is a sample text file. It's repeated two times.
