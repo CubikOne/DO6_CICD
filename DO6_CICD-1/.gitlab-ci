@@ -1,0 +1,49 @@
+stages:
+  - build
+  - style_test
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - cd src/C2_SimpleBashUtils/cat
+    - make
+    - cd ../grep
+    - make
+  artifacts:
+    paths:
+    - src/C2_SimpleBashUtils/cat/s21_cat
+    - src/C2_SimpleBashUtils/grep/s21_grep
+    expire_in: 30 days
+  after_script:
+    - bash telega.sh
+
+style-test-job:
+  stage: style_test
+  script:
+    - cd src/C2_SimpleBashUtils
+    - clang-format -Werror -n $(find . -name '*.c' -o -name '*.h')
+  after_script:
+    - bash telega.sh
+
+test-job:
+  stage: test
+  script:
+    - cd src/C2_SimpleBashUtils/cat
+    - bash test_func_cat.sh
+    - cd ../grep/test_files
+    - bash tests.sh
+  after_script:
+    - bash telega.sh
+
+
+deploy-job:
+  stage: deploy
+  script:
+    - chmod 777 deploy.sh
+    - bash deploy.sh
+  when: manual
+  after_script:
+    - bash telega.sh
+
